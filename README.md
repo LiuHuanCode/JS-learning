@@ -1,5 +1,2 @@
-<<<<<<< HEAD
-# JS-learning
-=======
-test git
->>>>>>> test
+test git again again
+
