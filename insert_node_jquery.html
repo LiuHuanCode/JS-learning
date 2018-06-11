@@ -2,9 +2,9 @@
     "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-        <script src="http://libs.baidu.com/jquery/1.7.2/jquery.min.js" type="text/javaScript"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>dom</title>
+    <script src="jquery-3.3.1.min.js" type="text/javaScript"></script>
 </head>
 <body>
     <p title="选择你喜欢的水果">你最喜欢的水果是？</p>
@@ -17,14 +17,24 @@
 </body>
 </html>
 <script type="text/javaScript">
-    var $li_1 = $("<li title='香蕉'>香蕉</li>");
-    var $li_2 = $("<li title='雪梨'>雪梨</li>");
-    var $li_3 = $("<li title='其它'>其它</li>");
+    $(function() {
+        var $li_1 = $("<li title='香蕉'>香蕉</li>");
+        var $li_2 = $("<li title='雪梨'>雪梨</li>");
+        var $li_3 = $("<li title='其它'>其它</li>");
 
-    var $parent = $("ul");
-    var $two_li = $(ul li:eq(1));
-    $parent.append($li_1);1
-    $parent.prepend($li_2);
-    $li_3.insertAfter($two_li);
+        var $parent = $("ul");  //获取<ul>节点
+        var $two_li = $(ul li:eq(1));  //获取<ul>节点中第二个<li>元素节点
+        $parent.append($li_1);  //将$li_1添加到父元素的最后面
+        $parent.prepend($li_2);  //将$li_2添加到父元素的最前面
+        $li_3.insertAfter($two_li);  //将$li_3插入到$two_li的后面
+    })
+    
 
+    //也可以移动节点
+    // var $one_li = $("ul li:eq(1)");
+    // var $two_li = $("ul li:eq(2)");
+    // $two_li.insertBefore($one_li);
+
+    // $("p").replaceWith("<strong>你最不喜欢的水果是?</strong>");
+    // $("<strong>你最不喜欢的水果是?</strong>").replaceAll("p");
 </script>

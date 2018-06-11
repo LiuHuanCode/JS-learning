@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>dom</title>
+    <script src="jquery-3.3.1.min.js" type="text/javaScript"></script>
+</head>
+<body>
+    <ul>
+        <li>
+            <a href="" class="tooltip" title="苹果ipod">
+                <img src="" alt="苹果ipod"/>
+            </a>
+        </li>
+        <li>
+            <a href="" class="tooltip" title="苹果iphone">
+                <img src="" alt="苹果iphone"/>
+            </a>
+        </li>
+        <li>
+            <a href="" class="tooltip" title="苹果mac">
+                <img src="" alt="苹果mac"/>
+            </a>
+        </li>
+    </ul>
+</body>
+</html>
+<script type="text/javaScript">
+    $(function() {
+        var x = 10;
+        var y = 20; //控制提示框的位置
+        $("a.tooltip").mouseover(function(e) {
+            this.myTitle = this.title;
+            this.title = "";    //清空<a>的title属性的提示效果
+            var imgTitle = this.myTitle? "<br/>" + this.myTitle : "";
+            var tooltip = "<div id='tooltip'><img src='"+ this.href +
+                "'alt='产品预览图'/>" + imgTitle + "</div>";    //创建div元素
+            $("body").append(tooltip);  //将创建的节点追加到文档中
+            $("#tooltip")
+                .css({
+                    "top": (e.pageY + y) + "px",
+                    "left": (e.pageX + x) + "px"
+                }).show("fast");    //设置x、y坐标，并且显示
+        }).mouseout(function () { 
+            this.title = this.myTitle;  //防止下次鼠标划入<a>的title没有值
+            $("#tooltip").remove();   //移除
+        }).mousemove(function(e) {
+            $("#tooltip")
+                .css({
+                    "top": (e.pageY + y) + "px",
+                    "left": (e.pageX + x) + "px"
+                });   //使提示框随鼠标移动
+        });
+    })
+
+</script>
