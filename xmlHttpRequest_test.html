@@ -1,0 +1,28 @@
+<input type="button" value="Ajax提交" onclick="Ajax()"/>
+<div id="resText"></div>
+//<button>按钮用来触发Ajax，id为“resText”的元素用来显示服务器返回的HTML文本
+
+<script>
+    function Ajax(){
+        var xmlHttpReq = null;
+        if(window.ActiveXObject){   //IE5、IE6是以ActiveXObject的方式引入xmlHttpRequest
+            xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+        }else if (window.XMLHttpRequest){
+            xmlHttpReq = new XMLHttpRequest();
+        }
+
+        xmlHttpReq.open("GET", "test.php", true);
+        //默认情况下，XMLHttpRequest发送的HTTP请求是异步的，但可以显式地吧async参数设置为true
+        xmlHttpReq.onreadystatechange = RequestCallBack;
+        //当readyState值被改变时，会激发一个onreadystatechange事件，可以用其来设置回调函数
+        xmlHttpReq.send(null);
+        //因为使用GET方法，所以可以使用null作为参数调用
+    }
+    function RequestCallBack(){
+        if(xmlHttpReq.readyState == 4){
+            if(xmlHttpReq.status == 200){
+                document.getElementById("resText").innerHTML = xmlHttpReq.responseText;
+            }
+        }
+    }
+</script>

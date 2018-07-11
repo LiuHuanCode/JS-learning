@@ -1,0 +1,62 @@
+<form id="form1" action="#">
+    <p>评论：</p>
+    <p>姓名：<input type="text" name="username" id="username>"</p>
+    <p>内容：
+        <textarea name="content" id="content" rows="2" cols="20"></textarea>
+    </p>
+    <p><input type="button" id="send" value="提交"/></p>
+</form>
+<div class="comment">已有评论：</div>
+<div id="resText">
+</div>
+
+<script>
+    $(function(){
+        $("#send").click(function (e) { 
+            $.get("get1.php", {
+                username: $("#username").val(),
+                content: $("#content").val()
+                }, function (data, textStatus) {
+                    //data: 返回的内容，可以是xml、json、html片段等
+                    //testStatus: 请求状态，4种：success、error、notmodified、timeout
+                
+                    //HTML片段，直接插入到主页面中
+                    $("#resText").html(data); 
+
+                    //XML文档，需要在服务器端设置Content-Type类型，代码如下：
+                    // header("Content-Type:text/xml; charset=utf-8"); //php
+                    var username = $(data).find("comment").attr("username");
+                    var content = $(data).find("comment content").text;
+                    var txtHtml = "<div class='comment'><h6>"
+                        +username+":</h6><p class='para'>"
+                        +content+"</p></div>"
+                },  "dataType" 
+            );
+            $.post("post1.php", {
+                    username: $("#username").val(),
+                    content: $("#content").val()
+                },
+                function (data, textStatus) {
+                    $("#resText").html(data); 
+                }, "dataType"
+            );
+            //当load()带参数传递时，会使用POST方式传递，与$.post()功能相同
+            $("#resText").load("post1.php", {
+                username: $("#username").val(),
+                content: $("#content").val()
+            });
+
+            $.getJSON("test.json", function (data, textStatus) {
+                    $.each(data.items, function (i, item) { 
+                        $("<img class='para/'>").attr("src", item.media.m)
+                                                .appendTo("#resText");
+                        if ( i == 3 ){
+                            return false;   //退出each循环
+                        }
+                    });
+                }
+            );
+    });
+    })
+    
+</script>

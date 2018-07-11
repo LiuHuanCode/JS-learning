@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>dom</title>
+    <script src="jquery-3.3.1.min.js" type="text/javaScript"></script>
+</head>
+<body>
+    <form>
+        你爱好的运动是？<input type="checkbox" id="Checked" value="全选/全不选 "/>全选/全不选<br/>
+        <input type="checkbox" name="items" value="足球"/>足球
+        <input type="checkbox" name="items" value="篮球"/>篮球
+        <input type="checkbox" name="items" value="羽毛球"/>羽毛球
+        <input type="checkbox" name="items" value="乒乓球"/>乒乓球</br>
+        <input type="button" id="CheckedAll" value="全 选"/>
+        <input type="button" id="CheckedNo" value="全不选"/>
+        <input type="button" id="CheckedRev" value="反 选"/>
+        <input type="button" id="send" value="提 交"/>
+    </form>
+</body>
+</html>
+<script type="text/javaScript">
+    $(function() {
+        $("#CheckedAll").click(function () { 
+            $('[name=items]:checkbox').attr('checked', true);
+        });
+        $("#CheckedNo").click(function () { 
+            $('[name=items]:checkbox').attr('checked', false);
+        });
+        $("#CheckedNo").click(function () { 
+            $('[name=items]:checkbox').each(function () {
+                $(this).attr('checked', $(this).attr('checked'));
+                //或使用原生JS
+                //this.checked != this.checked;
+            })
+        });
+        $("#send").click(function () { 
+            var str = "你选中的是：\r\n"；
+            $('[name=items]:checkbox:checked').each(function () {
+                str += $(this).val() + "\r\n";
+            })
+            alert(str);
+        });
+
+        //全选/全不选复选框，既要设置id为“Checked”的复选框的单击事件，也要设置其他items的单击事件
+        $("#Checked").click(function () { 
+            $('[name=items]:checkbox').attr('checked', this.checked);
+        });
+        $('[name=items]:checkbox').click(function () {
+            var flag = true;
+            $('[name=items]:checkbox:checked').each(function () {
+                if (!this.checked) {
+                    flag = false;
+                }
+            });
+            $("#Checked").attr("checked", flag);
+            //也可以判断复选框的总数是否与选中的复选框数量是否相等
+            //var $temp = $('[name=items]:checkbox');
+            //$("#Checked").attr("checked", $temp.length==$temp.filter(":checked").length);
+        })
+    })
+
+</script>

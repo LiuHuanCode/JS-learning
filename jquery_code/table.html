@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>dom</title>
+    <script src="jquery-3.3.1.min.js" type="text/javaScript"></script>
+</head>
+<body>
+    <table>
+        筛选：<input type="text" id="filterName"/>
+        <thead>
+            <tr><th>姓名</th><th>性别</th><th>暂住地</th></tr>
+        </thead>
+        <tbody>
+            <tr class="parent" id="row_01"><td colspan="3">折叠</td></tr>
+            <tr class="child_row_01"><td>张山</td><td>男</td><td>浙江宁波</td></tr>
+            <tr class="child_row_01"><td>李四</td><td>男</td><td>浙江杭州</td></tr>
+            <tr class="child_row_01"><td>王五</td><td>男</td><td>湖南长沙</td></tr>
+            <tr><td>赵六</td><td>女</td><td>浙江温州</td></tr>
+            <tr><td>Rain</td><td>男</td><td>辽宁大连</td></tr>
+            <tr><td>Max</td><td>女</td><td>山东济南</td></tr>
+        </tbody>
+    </table>
+</body>
+</html>
+<style>
+    .even{ background: #fff38f; }
+    .old{ background: #ffffee; }
+</style>
+<script type="text/javaScript">
+    $(function() {
+        //排除表格头部<thead>中的<tr>，给tbody的奇、偶数行添加样式
+        $("tbody>tr:odd").addClass("odd");
+        $("tbody>tr:even").addClass("even");
+        //单机表格行高亮显示
+        $("tbody>tr").click(function () { 
+            $(this)
+                .addClass("selected")
+                .siblings().removeClass("selected")
+                .end()//使操作对象返回$(this)
+              .find(":radio").attr("checked". true);            
+        });
+        //表格展开折叠
+        $("tr.parent").click(function () { 
+            $(this)
+                .toggleClass("selected")
+                .siblings(".child"+this.id).toggle();
+            
+        });
+        //表格内容筛选
+        $("#filterName").keyup(function () { 
+            $("table tbody tr").hide()
+                .filter(":contains('"+($(this).val())+"')").show();
+        });
+    })
+
+</script>
